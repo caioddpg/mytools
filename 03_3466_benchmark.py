@@ -2,6 +2,7 @@ import AulasPraticas.AP_03_ordenacao as ap3
 import sys
 import random
 import time
+import pandas as pd
 sys.setrecursionlimit(10**6)
 
 
@@ -29,39 +30,23 @@ def prf_algo(sort_algo,N,k,worst = False):
         times.append(end_t - start_t)
     return sum(times)/k
 
+tempos = []
+nomes = []
 
-print(prf_algo(ap3.selection_sort,1000,50))
+for i in [ap3.selection_sort,ap3.divide_and_conquer_sort,ap3.quick_sort]:
+    for j in [1000,5000,10000]:
+        tempos.append(prf_algo(i,j,50),prf_algo(i,j,50,True))
+        nome = i.split(".")[1]
+        nomes.append(nome,nome+"_worst")
+        
 
-print(prf_algo(ap3.selection_sort,1000,50,True))
+df = pd.DataFrame()
 
-print(prf_algo(ap3.divide_and_conquer_sort,1000,50))
+# Add Hours column, starting trom zero, ending at 15 with step size of 5
+df['Hours(n)'] = range(0,16,5)
 
-print(prf_algo(ap3.divide_and_conquer_sort,1000,50,True))
+# Calcualtion total number using hours
+df['Total number'] = 200* 2**(df['Hours(n)'])
 
-print(prf_algo(ap3.quick_sort,1000,50))
-
-print(prf_algo(ap3.quick_sort,1000,50,True))
-
-print(prf_algo(ap3.selection_sort,5000,50))
-
-print(prf_algo(ap3.selection_sort,5000,50,True))
-
-print(prf_algo(ap3.divide_and_conquer_sort,5000,50))
-
-print(prf_algo(ap3.divide_and_conquer_sort,5000,50,True))
-
-print(prf_algo(ap3.quick_sort,5000,50))
-
-print(prf_algo(ap3.quick_sort,5000,50,True))
-
-print(prf_algo(ap3.selection_sort,10000,50))
-
-print(prf_algo(ap3.selection_sort,10000,50,True))
-
-print(prf_algo(ap3.divide_and_conquer_sort,10000,50))
-
-print(prf_algo(ap3.divide_and_conquer_sort,10000,50,True))
-
-print(prf_algo(ap3.quick_sort,10000,50))
-
-print(prf_algo(ap3.quick_sort,10000,50,True))
+#show dataframe
+print(df)
